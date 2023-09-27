@@ -1,19 +1,2 @@
-Alarm ,Tamper ,Alarm ,Tamper ,Measured Temperature 캜,Relative Humidity % RH,Tolerance Humidity % RH,Measured Temperature 캜,Tolerance Temperature 캜,Air quality - Level ,Air quality - Recommendation ,Air quality - Exposure Limit ,VOC ppb,Minimum Voc ppb,Maximum Voc ppb,Resolution Voc ppb,Relative Humidity % RH,Tolerance Humidity % RH,Measured Temperature 캜,Tolerance Temperature 캜
-True,False,True,False,21.9,54.0,3.5,23.3,0.5,Poor,Intensified ventilation / airing - search for sources,Less than 1 month,1051,0,60000,1,55.8,2.0,22.3,0.2
-True,False,True,False,21.9,54.0,3.5,23.4,0.5,Poor,Intensified ventilation / airing - search for sources,Less than 1 month,1091,0,60000,1,55.8,2.0,22.3,0.2
-True,False,True,False,21.4,55.0,3.5,23.4,0.5,Poor,Intensified ventilation / airing - search for sources,Less than 1 month,1145,0,60000,1,55.9,2.0,22.3,0.2
-True,False,True,False,21.3,55.0,3.5,23.4,0.5,Poor,Intensified ventilation / airing - search for sources,Less than 1 month,1107,0,60000,1,56.3,2.0,22.3,0.2
-True,False,True,False,20.9,55.0,3.5,23.4,0.5,Poor,Intensified ventilation / airing - search for sources,Less than 1 month,1089,0,60000,1,56.4,2.0,22.2,0.2
-True,False,True,False,20.8,55.0,3.5,23.4,0.5,Poor,Intensified ventilation / airing - search for sources,Less than 1 month,1789,0,60000,1,57.6,2.0,22.3,0.2
-True,False,True,False,21.2,54.0,3.5,23.3,0.5,Poor,Intensified ventilation / airing - search for sources,Less than 1 month,1272,0,60000,1,56.4,2.0,22.2,0.2
-True,False,True,False,23.1,54.0,3.5,23.4,0.5,Poor,Intensified ventilation / airing - search for sources,Less than 1 month,1094,0,60000,1,56.2,2.0,22.1,0.2
-True,False,True,False,23.3,53.0,3.5,23.5,0.5,Poor,Intensified ventilation / airing - search for sources,Less than 1 month,975,0,60000,1,55.4,2.0,22.1,0.2
-True,False,True,False,22.8,53.0,3.5,23.4,0.5,Poor,Intensified ventilation / airing - search for sources,Less than 1 month,896,0,60000,1,54.4,2.0,22.1,0.2
-True,False,True,False,22.0,52.0,3.5,23.3,0.5,Poor,Intensified ventilation / airing - search for sources,Less than 1 month,779,0,60000,1,53.8,2.0,22.0,0.2
-True,False,True,False,21.5,52.0,3.5,23.2,0.5,Poor,Intensified ventilation / airing - search for sources,Less than 1 month,766,0,60000,1,53.1,2.0,21.9,0.2
-True,False,True,False,21.0,51.0,3.5,23.2,0.5,Poor,Intensified ventilation / airing - search for sources,Less than 1 month,696,0,60000,1,52.9,2.0,21.8,0.2
-True,False,True,False,23.1,52.0,3.5,23.2,0.5,Moderate,Intensified ventilation / airing - search for sources,Less than 12 months,647,0,60000,1,53.8,2.0,21.8,0.2
-True,False,True,False,21.5,51.0,3.5,23.2,0.5,Moderate,Intensified ventilation / airing - search for sources,Less than 12 months,604,0,60000,1,52.9,2.0,21.9,0.2
-True,False,True,False,21.7,50.0,3.5,23.3,0.5,Moderate,Intensified ventilation / airing - search for sources,Less than 12 months,454,0,60000,1,52.8,2.0,21.9,0.2
-True,False,True,False,21.4,49.0,3.5,23.3,0.5,Moderate,Intensified ventilation / airing - search for sources,Less than 12 months,425,0,60000,1,51.6,2.0,21.9,0.2
-True,False,True,False,19.8,50.0,3.5,22.9,0.5,Moderate,Intensified ventilation / airing - search for sources,Less than 12 months,377,0,60000,1,54.0,2.0,21.5,0.2
+DateTime,Relative Humidity % RH,Tolerance Humidity % RH,Measured Temperature 째C,Tolerance Temperature 째C,Air quality - Level ,Air quality - Recommendation ,Air quality - Exposure Limit ,VOC ppb,Minimum Voc ppb,Maximum Voc ppb,Resolution Voc ppb,Relative Humidity % RH,Tolerance Humidity % RH,Measured Temperature 째C,Tolerance Temperature 째C,Alarm ,Tamper ,Alarm ,Tamper ,Measured Temperature 째C
+2023-09-27 19:03:32.270814,48.0,3.5,28.1,0.5,Excellent,no action,No limit,43,0,60000,1,45.3,2.0,26.5,0.2,False,False,False,False,27.8
