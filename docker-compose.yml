@@ -33,6 +33,34 @@ services:
       - django
       - redis
 
+  celery-beat:
+    build: .
+    container_name: celery-beat
+    command: celery -A licenta_calitatea_aerului beat -l INFO
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=localhost
+    depends_on:
+      - django
+      - redis
+    volumes:
+      - .:/usr/src/app
+
+  flower:
+    build: .
+    container_name: flower
+    command: celery -A licenta_calitatea_aerului flower
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=localhost
+    depends_on:
+      - django
+      - redis
+    ports:
+      - 5555:5555
+    volumes:
+      - .:/usr/src/app
+
   pgdb:
     image: postgres
     container_name: pgdb
