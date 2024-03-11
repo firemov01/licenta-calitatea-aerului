@@ -16,6 +16,6 @@ jobs:
           trello-board-id: ${{ secrets.TRELLO_BOARD }}
           trello-card-action: "Attachment"
           trello-list-name-commit: "Doing"
-          trello-list-name-pr-open: "Reviewing"
+          trello-list-name-pr-open: "Code Review"
           trello-list-name-pr-closed: "Testing"
           trello-card-id-pattern: "T-"
