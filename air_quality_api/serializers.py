@@ -1,22 +1,27 @@
+import logging
+import sys
 from rest_framework import serializers
-from .models import GraphData, GraphValue
+from .models import DevelcoDevice, DevelcoDeviceData
 
-class GraphDataSerializer(serializers.ModelSerializer):
+
+class DeviceDataSerializer(serializers.ModelSerializer):
     class Meta:
-        model = GraphData
-        fields = ['id', 'name', 'graph_values']
+        model = DevelcoDeviceData
+        fields = ['id', 'key', 'name', 'type',
+                  'unit', 'access', 'last_updated', 'value']
 
-    graph_values = serializers.SerializerMethodField()
-    
-    def get_graph_values(self, obj):
-        graph_values = GraphValue.objects.filter(graph_data=obj)
-        serializer = GraphValueSerializer(graph_values, many=True)
+
+class DevelcoDeviceSerializer(serializers.ModelSerializer):
+    device_data = serializers.SerializerMethodField()
+
+    class Meta:
+        model = DevelcoDevice
+        fields = ['id', 'name', 'device_id', 'device_data']
+
+    def get_device_data(self, obj):
+        logger = logging.getLogger('django')
+        logger.info(obj.__dict__)
+        device_data = DevelcoDeviceData.objects.filter(
+            develco_device_id=obj.device_id)
+        serializer = DeviceDataSerializer(device_data, many=True)
         return serializer.data
-
-
-
-class GraphValueSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = GraphValue
-        fields = ['id', 'value', 'date']
-    

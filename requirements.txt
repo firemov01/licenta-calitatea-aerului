@@ -14,3 +14,6 @@ urllib3==1.26.15
 psycopg2-binary==2.9.7
 celery
 redis
+ipython
+django-celery-beat
+flower

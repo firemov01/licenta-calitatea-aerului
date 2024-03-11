@@ -10,8 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+import asyncio
+from datetime import datetime
+from celery.schedules import crontab
 from pathlib import Path
 import os
+import sys
+
+if sys.platform == 'win32':
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -39,7 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'air_quality_api'
+    'air_quality_api',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -79,11 +87,14 @@ WSGI_APPLICATION = 'licenta_calitatea_aerului.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
+        'HOST': 'pgdb',
         'NAME': 'postgres',
         'USER': 'postgres',
         'PASSWORD': 'root',
-        'HOST': 'pgdb',
-        'PORT': '5432'
+        'PORT': '5432',
+        'OPTIONS': {
+            'options': '-c search_path=public'
+        }
     }
 }
 
@@ -132,3 +143,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Celery settings
 CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
+
+CELERY_BEAT_SCHEDULE = {  # scheduler configuration
+    'get_device_data_for_all_devices_evry_15_minutes': {
+        # name of task with path
+        'task': 'air_quality_api.tasks.get_device_data_for_all_devices',
+        'schedule': crontab(minute='*/15'),
+    },
+}

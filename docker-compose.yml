@@ -2,6 +2,8 @@ version: "3.8"
 
 services:
   django:
+    tty: true
+    restart: always
     build: .
     container_name: django
     command: python manage.py runserver 0.0.0.0:8000
@@ -19,6 +21,7 @@ services:
       - redis
 
   celery:
+    restart: always
     build: .
     container_name: celery
     command: celery -A licenta_calitatea_aerului worker -l INFO
@@ -33,7 +36,38 @@ services:
       - django
       - redis
 
+  celery-beat:
+    restart: always
+    build: .
+    container_name: celery-beat
+    command: celery -A licenta_calitatea_aerului beat -l INFO
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=localhost
+    depends_on:
+      - django
+      - redis
+    volumes:
+      - .:/usr/src/app
+
+  flower:
+    restart: always
+    build: .
+    container_name: flower
+    command: celery -A licenta_calitatea_aerului flower
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=localhost
+    depends_on:
+      - django
+      - redis
+    ports:
+      - 5555:5555
+    volumes:
+      - .:/usr/src/app
+
   pgdb:
+    restart: always
     image: postgres
     container_name: pgdb
     environment:
@@ -46,6 +80,7 @@ services:
       - 5432:5432
 
   redis:
+    restart: always
     image: "redis:alpine"
 
 volumes:

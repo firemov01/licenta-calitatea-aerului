@@ -1,41 +1,29 @@
+from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
 from rest_framework import permissions
-from .models import GraphData, GraphValue
-from .serializers import GraphDataSerializer, GraphValueSerializer
-from .data_script.data_script import DataScript
+from .models import DevelcoDevice, DevelcoDeviceData
+from .serializers import DevelcoDeviceSerializer, DeviceDataSerializer
 
-class GraphDataView(APIView):
+
+class DeviceDataView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
     def get(self, request):
-        graph_data = GraphData.objects.all()
-        serializer = GraphDataSerializer(graph_data, many=True)
+        device_data = DevelcoDeviceData.objects.all()
+        serializer = DeviceDataSerializer(device_data, many=True)
         return Response(serializer.data)
 
-    # def post(self, request):
-    #     serializer = GraphDataSerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-class ScriptView(APIView):
+class DevelcoDeviceView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def post(self, request):
-        data_script = DataScript()
-        if data_script.is_running:
-            data_script.stop()
-            return Response({'status': 'stopped'})
-        else:
-            data_script.start()
-            return Response({'status': 'started'})
-    
     def get(self, request):
-        data_script = DataScript()
-        if data_script.is_running:
-            return Response({'status': 'running'})
-        else:
-            return Response({'status': 'stopped'})
+        device = DevelcoDevice.objects.all()
+        serializer = DevelcoDeviceSerializer(device, many=True)
+        return Response(serializer.data)
+
+    def get(self, request, id, format=None):
+        develco_device = get_object_or_404(DevelcoDevice, device_id=id)
+        serializer = DevelcoDeviceSerializer(develco_device, many=False)
+        return Response(serializer.data)
