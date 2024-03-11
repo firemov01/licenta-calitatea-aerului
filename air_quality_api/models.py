@@ -1,28 +1,6 @@
 import json
 from typing import Any
 from django.db import models
-from django.contrib.auth.models import User
-
-# TODO: Remove this
-
-
-class GraphData(models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=200)
-
-    def __str__(self) -> str:
-        return self.name
-
-
-# TODO: Remove this
-class GraphValue(models.Model):
-    id = models.AutoField(primary_key=True)
-    value = models.CharField(max_length=200)
-    date = models.DateTimeField(auto_now_add=True)
-    graph_data = models.ForeignKey(GraphData, on_delete=models.CASCADE)
-
-    def __str__(self) -> str:
-        return super().__str__()
 
 
 class NamingSchemaField(models.Model):
@@ -69,28 +47,6 @@ class Metadata(models.Model):
         return super().__str__()
 
 
-class DevelcoDeviceData(models.Model):
-    # id from the database
-    id = models.AutoField(primary_key=True)
-    # key
-    key = models.CharField(max_length=200)
-    # name
-    name = models.CharField(max_length=200)
-    # type
-    type = models.CharField(max_length=200)
-    # unit
-    unit = models.CharField(max_length=200)
-    # access
-    access = models.CharField(max_length=200)
-    # last updated
-    last_updated = models.DateTimeField()
-    # value
-    value = models.FloatField()
-
-    def __str__(self) -> str:
-        return self.name
-
-
 class DevelcoDevice(models.Model):
     # id from the database
     id = models.AutoField(primary_key=True)
@@ -116,11 +72,34 @@ class DevelcoDevice(models.Model):
     online = models.BooleanField()
     # config complete pct (percentage) - how much of the configuration is complete
     config_complete_pct = models.IntegerField()
-    # device data
-    device_data = models.ManyToManyField(DevelcoDeviceData)
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
+
+    def __str__(self) -> str:
+        return f"name: {self.name}, device_id: {self.device_id}, eui: {self.eui}, manufacturer_name: {self.manufacturer_name}, model_identifier: {self.model_identifier}, default_name: {self.default_name}, metadata: {self.metadata}, template_hash: {self.template_hash}, discovered: {self.discovered}, online: {self.online}, config_complete_pct: {self.config_complete_pct}"
+
+
+class DevelcoDeviceData(models.Model):
+    # id from the database
+    id = models.AutoField(primary_key=True)
+    # key
+    key = models.CharField(max_length=200)
+    # name
+    name = models.CharField(max_length=200)
+    # type
+    type = models.CharField(max_length=200)
+    # unit
+    unit = models.CharField(max_length=200)
+    # access
+    access = models.CharField(max_length=200)
+    # last updated
+    last_updated = models.DateTimeField()
+    # value - string
+    value = models.CharField(max_length=200)
+    # develco_device - the device that this data belongs to - if the device is deleted, the data is deleted as well
+    develco_device = models.ForeignKey(
+        DevelcoDevice, on_delete=models.CASCADE, null=True)
 
     def __str__(self) -> str:
         return self.name

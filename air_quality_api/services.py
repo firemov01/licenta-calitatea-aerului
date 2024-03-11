@@ -117,15 +117,18 @@ class DevelcoService(object):
 
         data = convert_json(data, camel_to_underscore)
         if isinstance(data, list) and 'code' in data[0] and data[0]['code'] == 106:
+            print("No data for device with id: " + str(device_id))
+            print(data)
             return None
 
         print(data)
-        # Map the data to the model
-        data = [DevelcoDeviceData(**device) for device in data]
+        # Map the data to the model and the id of the device
+        data = [DevelcoDeviceData(**device, develco_device_id=device_id)
+                for device in data]
         # Check if the device already exists by last_updated and key fields in the database and save it if it doesn't
         database_device_data = DevelcoDeviceData.objects.all()
         for device in data:
-            if not database_device_data.filter(last_updated=device.last_updated, key=device.key).exists():
+            if not database_device_data.filter(last_updated=device.last_updated, key=device.key, develco_device_id=device_id).exists():
                 device = device.save()
         # Return the data
         return data
@@ -141,11 +144,12 @@ class DevelcoService(object):
         # Get the data from the API for all devices
         data_to_return = []
         for device in devices:
+            print(str(device))
             for data_group in device.metadata.data_groups.all():
                 print(DEVELCO_API_URL +
                       f'/ssapi/zb/dev/{device.device_id}/ldev/{data_group.ldev_key}/data')
                 data = DevelcoService.get_device_data_from_api(
-                    device.id, data_group.ldev_key)
+                    device.device_id, data_group.ldev_key)
                 if data:
                     data_to_return.append(data)
         return data_to_return
