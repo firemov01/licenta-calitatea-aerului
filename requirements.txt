@@ -17,3 +17,4 @@ redis
 ipython
 django-celery-beat
 flower
+pandas
