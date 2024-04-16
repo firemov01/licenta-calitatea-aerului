@@ -21,6 +21,7 @@ services:
       - redis
 
   celery:
+    tty: true
     restart: always
     build: .
     container_name: celery
@@ -37,6 +38,7 @@ services:
       - redis
 
   celery-beat:
+    tty: true
     restart: always
     build: .
     container_name: celery-beat
@@ -51,6 +53,7 @@ services:
       - .:/usr/src/app
 
   flower:
+    tty: true
     restart: always
     build: .
     container_name: flower
@@ -67,6 +70,7 @@ services:
       - .:/usr/src/app
 
   pgdb:
+    tty: true
     restart: always
     image: postgres
     container_name: pgdb
