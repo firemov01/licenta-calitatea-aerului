@@ -4,6 +4,7 @@ charset-normalizer==3.1.0
 Django==4.1.7
 django-rest-framework==0.1.0
 djangorestframework==3.14.0
+django-cors-headers
 idna==3.4
 pytz==2022.7.1
 requests==2.28.2
@@ -11,10 +12,15 @@ schedule==1.1.0
 sqlparse==0.4.3
 tzdata==2022.7
 urllib3==1.26.15
+psycopg2==2.9.7
 psycopg2-binary==2.9.7
 celery
 redis
 ipython
 django-celery-beat
 flower
+matplotlib
+numpy
 pandas
+scikit-learn
+joblib

@@ -1,2 +1,0 @@
-DateTime,Relative Humidity % RH,Tolerance Humidity % RH,Measured Temperature °C,Tolerance Temperature °C,Air quality - Level ,Air quality - Recommendation ,Air quality - Exposure Limit ,VOC ppb,Minimum Voc ppb,Maximum Voc ppb,Resolution Voc ppb,Relative Humidity % RH,Tolerance Humidity % RH,Measured Temperature °C,Tolerance Temperature °C,Alarm ,Tamper ,Alarm ,Tamper ,Measured Temperature °C
-2023-09-27 19:03:32.270814,48.0,3.5,28.1,0.5,Excellent,no action,No limit,43,0,60000,1,45.3,2.0,26.5,0.2,False,False,False,False,27.8

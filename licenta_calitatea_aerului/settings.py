@@ -33,9 +33,6 @@ SECRET_KEY = 'django-insecure-^dda8*1vm*n72oxou^3#$1q5czjf0@%@pw%78^!pl$-1=gsfdc
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'air_quality_api',
     'django_celery_beat',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -58,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'licenta_calitatea_aerului.urls'
@@ -151,3 +150,8 @@ CELERY_BEAT_SCHEDULE = {  # scheduler configuration
         'schedule': crontab(minute='*/15'),
     },
 }
+
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+ALLOWED_HOSTS = ['*']
+CORS_ORIGIN_ALLOW_ALL = True
