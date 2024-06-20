@@ -18,12 +18,12 @@ class DeviceDataView(APIView):
 class DevelcoDeviceView(APIView):
     permission_classes = [permissions.IsAuthenticated]
 
-    def get(self, request):
-        device = DevelcoDevice.objects.all()
-        serializer = DevelcoDeviceSerializer(device, many=True)
-        return Response(serializer.data)
+    def get(self, request, id=None, format=None):
+        if id is None:
+            develco_device = DevelcoDevice.objects.all()
+            serializer = DevelcoDeviceSerializer(develco_device, many=True)
+            return Response(serializer.data)
 
-    def get(self, request, id, format=None):
         develco_device = get_object_or_404(DevelcoDevice, device_id=id)
         serializer = DevelcoDeviceSerializer(develco_device, many=False)
         return Response(serializer.data)
