@@ -52,7 +52,7 @@ def save_to_csv():
     with open("device_data.csv", "w") as file:
         # write the header witch should have the nesxt columns: id, date, h_humidity, h_temperature, a_humidity, a_temperature, a_voc, w_temperature, w_alarm
         file.write(
-            "id, date, h_humidity, h_temperature, a_humidity, a_temperature, a_voc, w_temperature, w_alarm\n"
+            "id,date,h_humidity,h_temperature,a_humidity,a_temperature,a_voc,w_temperature,w_alarm\n"
         )
 
         # get all the data from the db in batches of 1000 using iterator
@@ -71,7 +71,7 @@ def save_to_csv():
             "w_alarm": None,
         }
 
-        number_of_elements_saved = 0
+        number_of_elements_saved = 2
 
         for i in range(0, number_of_device_data, 1000):
             device_data_list = DevelcoDeviceData.objects.all()[i : i + 1000]
@@ -105,6 +105,6 @@ def save_to_csv():
                         number_of_elements_saved += 1
                 if number_of_elements_saved == 9:
                     file.write(
-                        f"{field_name_map['id']}, {field_name_map['date']}, {field_name_map['h_humidity']}, {field_name_map['h_temperature']}, {field_name_map['a_humidity']}, {field_name_map['a_temperature']}, {field_name_map['a_voc']}, {field_name_map['w_temperature']}, {field_name_map['w_alarm']}\n"
+                        f"{field_name_map['id']},{field_name_map['date']},{field_name_map['h_humidity']},{field_name_map['h_temperature']},{field_name_map['a_humidity']},{field_name_map['a_temperature']},{field_name_map['a_voc']},{field_name_map['w_temperature']},{field_name_map['w_alarm']}\n"
                     )
-                    number_of_elements_saved = 0
+                    number_of_elements_saved = 2
