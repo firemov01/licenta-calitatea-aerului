@@ -1,4 +1,3 @@
-import json
 from typing import Any
 from django.db import models
 
@@ -36,8 +35,7 @@ class MetadataDataGroup(models.Model):
 class Metadata(models.Model):
     id = models.AutoField(primary_key=True)
     img_url = models.CharField(max_length=200)
-    naming_schema = models.ForeignKey(
-        NamingSchema, on_delete=models.CASCADE, null=True)
+    naming_schema = models.ForeignKey(NamingSchema, on_delete=models.CASCADE, null=True)
     data_groups = models.ManyToManyField(MetadataDataGroup)
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
@@ -99,7 +97,35 @@ class DevelcoDeviceData(models.Model):
     value = models.CharField(max_length=200)
     # develco_device - the device that this data belongs to - if the device is deleted, the data is deleted as well
     develco_device = models.ForeignKey(
-        DevelcoDevice, on_delete=models.CASCADE, null=True)
+        DevelcoDevice, on_delete=models.CASCADE, related_name="device_data", null=True
+    )
 
     def __str__(self) -> str:
         return self.name
+
+
+class DeviceImage(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=200)
+    image_url = models.CharField(max_length=200)
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class AutomatedDevice(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=200)
+    description = models.CharField(max_length=200)
+    endpoint = models.CharField(max_length=200)
+    enabled = models.BooleanField()
+    image = models.ForeignKey(DeviceImage, on_delete=models.DO_NOTHING, null=True)
+
+
+class Limits(models.Model):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=200)
+    low_value = models.IntegerField()
+    high_value = models.IntegerField()
+    unit = models.CharField(max_length=200)
+    image_url = models.CharField(max_length=200, null=True)
