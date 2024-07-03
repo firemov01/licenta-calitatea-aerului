@@ -129,3 +129,8 @@ class Limits(models.Model):
     high_value = models.IntegerField()
     unit = models.CharField(max_length=200)
     image_url = models.CharField(max_length=200, null=True)
+
+
+class IsAutomaticModeActive(models.Model):
+    id = models.AutoField(primary_key=True)
+    is_active = models.BooleanField()
