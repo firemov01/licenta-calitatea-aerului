@@ -148,6 +148,10 @@ CELERY_BEAT_SCHEDULE = {  # scheduler configuration
         "task": "air_quality_api.tasks.get_device_data_for_all_devices",
         "schedule": crontab(minute="*/15"),
     },
+    "automate_devices_every_5_minutes": {
+        "task": "air_quality_api.tasks.automate_devices",
+        "schedule": crontab(minute="*/5"),
+    },
 }
 
 CORS_ALLOW_ALL_ORIGINS = True

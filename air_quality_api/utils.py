@@ -79,14 +79,14 @@ def save_to_csv():
             for device_data in device_data_list:
                 field_name_map["id"] = device_data.id
                 field_name_map["date"] = device_data.last_updated
-                if device_data.develco_device.name == "SquidZigBee":
+                if device_data.develco_device.name == "Humidity Sensor":
                     if device_data.key == "humidity":
                         field_name_map["h_humidity"] = device_data.value
                         number_of_elements_saved += 1
                     elif device_data.key == "temperature":
                         field_name_map["h_temperature"] = device_data.value
                         number_of_elements_saved += 1
-                elif device_data.develco_device.name == "Humidity Sensor":
+                elif device_data.develco_device.name == "Air Quality Sensor":
                     if device_data.key == "humidity":
                         field_name_map["a_humidity"] = device_data.value
                         number_of_elements_saved += 1
@@ -96,7 +96,7 @@ def save_to_csv():
                     elif device_data.key == "voc":
                         field_name_map["a_voc"] = device_data.value
                         number_of_elements_saved += 1
-                elif device_data.develco_device.name == "Air Quality Sensor":
+                elif device_data.develco_device.name == "Window Sensor":
                     if device_data.key == "temperature":
                         field_name_map["w_temperature"] = device_data.value
                         number_of_elements_saved += 1

@@ -8,6 +8,7 @@ from .views import (
     DeviceDataPredictionView,
     DeviceDataView,
     DeviceImageView,
+    ModeView,
     TipsView,
 )
 
@@ -23,4 +24,5 @@ urlpatterns = [
     path("develco-device/limit/<int:id>/", DevelcoDeviceLimitView.as_view()),
     path("develco-device/status/", DevelcoDeviceStatusView.as_view()),
     path("develco-device/<int:id>/", DevelcoDeviceView.as_view()),
+    path("mode/", ModeView.as_view()),
 ]

@@ -4,8 +4,11 @@ from datetime import datetime, timedelta
 import json
 import requests
 from air_quality_api.models import (
+    AutomatedDevice,
     DevelcoDevice,
     DevelcoDeviceData,
+    IsAutomaticModeActive,
+    Limits,
     Metadata,
     MetadataDataGroup,
     NamingSchema,
@@ -326,10 +329,13 @@ class PredictionService(object):
     # prediction_service = PredictionService()
     # predictions = prediction_service.get_predictions()
 
+
 class AutomationService(object):
     """
     This class contains methods for automating devices.
     """
+
+    shelly_ip = "192.168.0.180"
 
     @staticmethod
     def automate_devices():
@@ -337,7 +343,65 @@ class AutomationService(object):
         This method automates a device.
         """
         # Get all AutomatedDevices from the database
-        automated_devices = AutomatedDevice.objects.all()
-        # Get all the limits from the database
-        limits = Limits.objects.all()
-        
+        automated_devices = AutomatedDevice.objects.all().filter(enabled=True)
+        # make a list from automated_devices
+        automated_device = list(automated_devices)
+        print(automated_device[0].image.name)
+
+        if len(automated_device) == 0:
+            return
+
+        if not IsAutomaticModeActive.objects.first().is_active:
+            for automated_device in automated_devices:
+                requests.get(f"http://{automated_device.endpoint}/relay/0?turn=off")
+            return
+
+        # Get the data from the prediction service for the next hour
+        prediction_service = PredictionService()
+        prediction = prediction_service.get_prediction(
+            datetime.now() + timedelta(hours=1)
+        )
+        prediction = prediction[0]
+
+        for automated_device in automated_devices:
+
+            # Get the data from the database
+            limit = None
+            # "Air Conditioner" "Heater" "Humidifier" "Dehumidifier" "Air Purifier"
+            if automated_device.image.name == "Air Conditioner":
+                print("here")
+                limit = Limits.objects.get(name="Temperature")
+                # If the temperature is above the limit, turn on the device
+                if prediction[3] > limit.high_value:
+                    requests.get(f"http://{automated_device.endpoint}/relay/0?turn=on")
+                else:
+                    requests.get(f"http://{automated_device.endpoint}/relay/0?turn=off")
+                print(limit.high_value, prediction[3])
+            elif automated_device.image.name == "Heater":
+                limit = Limits.objects.get(name="Temperature")
+                # If the temperature is below the limit, turn on the device
+                if prediction[3] < limit.low_value:
+                    requests.get(f"http://{automated_device.endpoint}/relay/0?turn=on")
+                else:
+                    requests.get(f"http://{automated_device.endpoint}/relay/0?turn=off")
+            elif automated_device.image.name == "Humidifier":
+                limit = Limits.objects.get(name="Humidity")
+                # If the humidity is below the limit, turn on the device
+                if prediction[0] < limit.low_value:
+                    requests.get(f"http://{automated_device.endpoint}/relay/0?turn=on")
+                else:
+                    requests.get(f"http://{automated_device.endpoint}/relay/0?turn=off")
+            elif automated_device.image.name == "Dehumidifier":
+                limit = Limits.objects.get(name="Humidity")
+                # If the humidity is above the limit, turn on the device
+                if prediction[0] > limit.high_value:
+                    requests.get(f"http://{automated_device.endpoint}/relay/0?turn=on")
+                else:
+                    requests.get(f"http://{automated_device.endpoint}/relay/0?turn=off")
+            elif automated_device.image.name == "Air Purifier":
+                limit = Limits.objects.get(name="VOC")
+                # If the VOC is above the limit, turn on the device
+                if prediction[4] > limit.high_value:
+                    requests.get(f"http://{automated_device.endpoint}/relay/0?turn=on")
+                else:
+                    requests.get(f"http://{automated_device.endpoint}/relay/0?turn=off")
