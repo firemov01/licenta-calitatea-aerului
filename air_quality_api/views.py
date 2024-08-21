@@ -4,13 +4,14 @@ from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from air_quality_api.services import PredictionService, TipsService
+from air_quality_api.services import AutomationService, PredictionService, TipsService
 from .models import (
     AutomatedDevice,
     DevelcoDevice,
     DevelcoDeviceData,
     DeviceImage,
     Limits,
+    IsAutomaticModeActive,
 )
 from .serializers import (
     AutomatedDeviceSerializer,
@@ -291,7 +292,9 @@ class AutomatedDeviceView(APIView):
         serializer = AutomatedDeviceSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            AutomationService.automate_devices()
             return Response(serializer.data)
+        AutomationService.automate_devices()
         return Response(serializer.errors)
 
     def patch(self, request, id):
@@ -301,7 +304,9 @@ class AutomatedDeviceView(APIView):
         )
         if serializer.is_valid():
             serializer.save()
+            AutomationService.automate_devices()
             return Response(serializer.data)
+        AutomationService.automate_devices()
         return Response(serializer.errors)
 
     def delete(self, request, id):
@@ -350,7 +355,9 @@ class DevelcoDeviceLimitView(APIView):
         serializer = LimitsSerializer(instance=limits, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
+            AutomationService.automate_devices()
             return Response(serializer.data)
+        AutomationService.automate_devices()
         return Response(serializer.errors)
 
 
@@ -526,3 +533,17 @@ class DeviceDataPredictionView(APIView):
                 return Response(DeviceDataSerializer(response, many=True).data)
 
         return Response({"error": "Invalid query parameters"})
+
+
+class ModeView(APIView):
+
+    def get(self, request):
+        mode = IsAutomaticModeActive.objects.first()
+        return Response({"is_active": mode.is_active})
+
+    def patch(self, request):
+        mode = IsAutomaticModeActive.objects.first()
+        mode.is_active = not mode.is_active
+        mode.save()
+        AutomationService.automate_devices()
+        return Response({"is_active": mode.is_active})

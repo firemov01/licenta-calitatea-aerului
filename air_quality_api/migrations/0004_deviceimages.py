@@ -19,10 +19,10 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.RunSQL(
-            "INSERT INTO air_quality_api_deviceimage (name, image_url) VALUES ('Air Purifier', 'https://cdn-icons-png.flaticon.com/512/2533/2533401.png');"
-            "INSERT INTO air_quality_api_deviceimage (name, image_url) VALUES ('Dehumidifier', 'https://cdn1.iconfinder.com/data/icons/household-appliances-17/160/dehumidifier-512.png');"
-            "INSERT INTO air_quality_api_deviceimage (name, image_url) VALUES ('Humidifier', 'https://cdn-icons-png.flaticon.com/512/1554/1554176.png');"
-            "INSERT INTO air_quality_api_deviceimage (name, image_url) VALUES ('Heater', 'https://uxwing.com/wp-content/themes/uxwing/download/household-and-furniture/heater-icon.png');"
-            "INSERT INTO air_quality_api_deviceimage (name, image_url) VALUES ('Air Conditioner', 'https://uxwing.com/wp-content/themes/uxwing/download/household-and-furniture/air-conditioner-icon.png');"
+            "INSERT INTO air_quality_api_deviceimages (name, image_url) VALUES ('Air Purifier', 'https://cdn-icons-png.flaticon.com/512/2533/2533401.png');"
+            "INSERT INTO air_quality_api_deviceimages (name, image_url) VALUES ('Dehumidifier', 'https://cdn1.iconfinder.com/data/icons/household-appliances-17/160/dehumidifier-512.png');"
+            "INSERT INTO air_quality_api_deviceimages (name, image_url) VALUES ('Humidifier', 'https://cdn-icons-png.flaticon.com/512/1554/1554176.png');"
+            "INSERT INTO air_quality_api_deviceimages (name, image_url) VALUES ('Heater', 'https://uxwing.com/wp-content/themes/uxwing/download/household-and-furniture/heater-icon.png');"
+            "INSERT INTO air_quality_api_deviceimages (name, image_url) VALUES ('Air Conditioner', 'https://uxwing.com/wp-content/themes/uxwing/download/household-and-furniture/air-conditioner-icon.png');"
         ),
     ]
